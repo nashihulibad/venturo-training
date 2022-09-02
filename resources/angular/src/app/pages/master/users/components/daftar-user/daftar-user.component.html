@@ -44,7 +44,7 @@
                     <table class="table table-hover">
                         <thead class="thead-light">
                             <tr>
-                                <td width="80"></td>
+                                <td>Gambar</td>
                                 <td>Nama</td>
                                 <td>Email</td>
                                 <td>Hak Akses</td>
@@ -93,6 +93,15 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" (click)="pagin(currentPage - 1)">Previous</a></li>
+                            <li *ngFor="let p of page" class="page-item" [class.active]="p == currentPage"><a class="page-link" (click)="pagin(p)">{{p}}</a></li>
+                            <li class="page-item"><a class="page-link" (click)="pagin(currentPage + 1)">Next</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -145,7 +154,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" (click)="cariUser()">
+            <button type="submit" class="btn btn-primary" (click)="cariUser()" (click)="modal.close()">
                 Search
             </button>
         </form>

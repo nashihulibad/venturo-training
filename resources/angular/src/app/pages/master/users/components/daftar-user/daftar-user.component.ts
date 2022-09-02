@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LandaService } from 'src/app/core/services/landa.service';
 import Swal from 'sweetalert2';
-
+import { environment } from "src/environments/environment";
 import { UserService } from '../../services/user-service.service';
+import { max } from 'rxjs/operators';
 
 @Component({
     selector: "user-daftar",
@@ -14,7 +15,17 @@ export class DaftarUserComponent implements OnInit {
     listUser: [];
     titleModal: string;
     modelId: number;
-    searchName: string;
+    searchName = '';
+
+    //datatable
+    dtOptions: DataTables.Settings = {};
+
+    //pagination
+    currentPage: any;
+    maxData: any;
+    maxPage: any;
+    paging = [];
+    page = [];
 
     constructor(
         private userService: UserService,
@@ -23,6 +34,7 @@ export class DaftarUserComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.currentPage = 1;
         this.getUser();
     }
 
@@ -31,14 +43,41 @@ export class DaftarUserComponent implements OnInit {
     }
 
     getUser() {
-        this.userService.getUsers([]).subscribe(
+        this.userService.getUsers({nama : ''}).subscribe(
             (res: any) => {
                 this.listUser = res.data.list;
+                this.maxData = res.data.meta.total;
+                this.paging = res.data.meta.links;
+                this.initPage(this.paging.length);
             },
             (err: any) => {
                 console.log(err);
             }
         );
+    }
+
+    initPage(page = 1) {
+        this.page = new Array(page);
+        for (let i = 1; i <= page; i++) {
+            this.page[i - 1] = i;
+        }
+    }
+
+    pagin(page: any) {
+       
+        if (page >= 1 && page <= this.paging.length) {
+            this.landaService
+                .DataGet(this.paging[page - 1].replace(environment.apiURL, ""))
+                .subscribe(
+                    (res: any) => {
+                        this.listUser = res.data.list;
+                        this.currentPage = page;
+                    },
+                    (err) => {
+                        console.log(err);
+                    }
+                );
+        }
     }
 
     showModalSearchUser(modal) {
@@ -50,6 +89,9 @@ export class DaftarUserComponent implements OnInit {
         this.userService.getUsers({ nama: this.searchName }).subscribe(
             (res: any) => {
                 this.listUser = res.data.list;
+                this.maxData = res.data.meta.total;
+                this.paging = res.data.meta.links;
+                this.initPage(this.paging.length);
             },
             (err: any) => {
                 console.log(err);

@@ -7,6 +7,10 @@ import { LandaService } from "src/app/core/services/landa.service";
 export class UserService {
     constructor(private landaService: LandaService) {}
 
+    getProfile(){
+        return this.landaService.DataGet("/v1/auth/profile");
+    }
+
     getUsers(arrParameter) {
         return this.landaService.DataGet("/v1/users", arrParameter);
     }

@@ -36,7 +36,7 @@ class ItemModel extends Model implements ModelInterface
     public $timestamps = true;
 
     protected $attributes = [
-        
+
     ];
 
     protected $fillable = [
@@ -66,15 +66,24 @@ class ItemModel extends Model implements ModelInterface
             $dataItem->where('nama', 'LIKE', '%'.$filter['nama'].'%');
         }
 
-        if (!empty($filter['email'])) {
-            $dataItem->where('email', 'LIKE', '%'.$filter['email'].'%');
+        if (!empty($filter['kategori'])) {
+            $dataItem->where('kategori', 'LIKE', '%'.$filter['kategori'].'%');
         }
 
         $sort = $sort ?: 'id DESC';
         $dataItem->orderByRaw($sort);
         $itemPerPage = $itemPerPage > 0 ? $itemPerPage : false;
 
-        return $dataItem->paginate($itemPerPage)->appends('sort', $sort);
+        return $dataItem->paginate($itemPerPage)->appends('sort', $sort)
+        ->appends('nama', $filter['nama'])->appends('kategori', $filter['kategori']);
+    }
+
+    public function fotoUrl() {
+        if(empty($this->foto)) {
+            return asset('assets/img/no-image.png');
+        }
+
+        return $this->foto;
     }
 
     public function getById(int $id): object

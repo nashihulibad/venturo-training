@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * Class Model untuk tabel user_auth
  * Dokumentasi Lengkap : https://laravel.com/docs/8.x/eloquent
- * 
+ *
  */
 class UserModel extends Authenticatable implements JWTSubject, ModelInterface
 {
@@ -55,7 +55,8 @@ class UserModel extends Authenticatable implements JWTSubject, ModelInterface
         'nama',
         'email',
         'password',
-        'foto'
+        'foto',
+        'user_roles_id'
     ];
 
     /**
@@ -99,7 +100,7 @@ class UserModel extends Authenticatable implements JWTSubject, ModelInterface
      * Method untuk mengecek apakah user memiliki permission
      *
      * @param  string  $permissionName contoh: user_create / user_update
-     * 
+     *
      * @return boolean
      */
     public function isHasRole($permissionName) {
@@ -126,7 +127,7 @@ class UserModel extends Authenticatable implements JWTSubject, ModelInterface
     public function fotoUrl() {
         if(empty($this->foto)) {
             return asset('assets/img/no-image.png');
-        } 
+        }
 
         return $this->foto;
     }
@@ -147,7 +148,7 @@ class UserModel extends Authenticatable implements JWTSubject, ModelInterface
         $user->orderByRaw($sort);
         $itemPerPage = ($itemPerPage > 0) ? $itemPerPage : false ;
 
-        return $user->paginate($itemPerPage)->appends('sort', $sort);
+        return $user->paginate($itemPerPage)->appends('sort', $sort)->appends('nama', $filter['nama']);
     }
 
     public function getById(int $id): object

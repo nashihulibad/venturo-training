@@ -27,7 +27,7 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = ['nama' => $request->nama ?? ''];
+        $filter = ['nama' => $request->nama ?? '', 'kategori' => $request->kategori ?? ''];
         $items = $this->item->getAll($filter, 5, $request->sort ?? '');
 
         return response()->success(new ItemCollection($items));
@@ -56,7 +56,7 @@ class ItemController extends Controller
             return response()->failed($dataItem['error'], 422);
         }
 
-        return response()->success([], 'Data item berhasil disimpan');
+        return response()->success([], 'Data item berhasil disimpan'); 
     }
 
     /**

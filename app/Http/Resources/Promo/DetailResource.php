@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Item;
+namespace App\Http\Resources\Promo;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,14 +15,14 @@ class DetailResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id_promo,
             'foto' => $this->foto,
             'nama' => $this->nama,
-            'deskripsi' => $this->deskripsi,
-            'kategori' => $this->kategori,
-            'harga' => $this->harga,
-            'is_available' => $this->is_available, 
-            'detail' => $this->itemDet,
+            'syarat_ketentuan' => $this->syarat_ketentuan,
+            'type' => $this->type,
+            'diskon' => $this->diskon,
+            'nominal' => $this->nominal,
+            'kadaluarsa' => $this->kadaluarsa,
         ];
     }
 }

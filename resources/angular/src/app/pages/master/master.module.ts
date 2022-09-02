@@ -19,6 +19,7 @@ import { DaftarCustomerComponent } from "./customers/components/daftar-customer/
 import { FormCustomerComponent } from "./customers/components/form-customer/form-customer.component";
 import { FormItemComponent } from "./items/components/form-item/form-item.component";
 import { DaftarItemComponent } from "./items/components/daftar-item/daftar-item.component";
+import { ProfileComponent } from './users/components/profile/profile.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { DaftarItemComponent } from "./items/components/daftar-item/daftar-item.
         FormCustomerComponent,
         FormItemComponent,
         DaftarItemComponent,
+        ProfileComponent,
     ],
     imports: [
         CommonModule,

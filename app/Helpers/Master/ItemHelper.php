@@ -68,8 +68,14 @@ class ItemHelper implements CrudInterface
             $detailItem = $payload['detail'] ?? [];
             unset($payload['detail']);
 
+            if(!empty($payload['foto'])){
+                $foto = $payload['foto']->store('public/upload/fotoItem');
+                $foto = str_replace('public/','', $foto);
+                $payload['foto'] = "http://127.0.0.1:8000/storage/".$foto;
+            }
+
             $newItem = $this->itemModel->store($payload);
-            
+
             // Simpan detail item
             if (!empty($detailItem)) {
                 $detail = new ItemDetHelper($newItem);
@@ -106,9 +112,15 @@ class ItemHelper implements CrudInterface
             // Hapus detail dari payload karena tabel m_item tidak memiliki kolom "detail"
             $detailItem = $payload['detail'] ?? [];
             unset($payload['detail']);
-        
+
+            if(!empty($payload['foto'])){
+                $foto = $payload['foto']->store('public/upload/fotoItem');
+                $foto = str_replace('public/','', $foto);
+                $payload['foto'] = "http://127.0.0.1:8000/storage/".$foto;
+            }
+
             $updateItem = $this->itemModel->edit($payload, $id);
-            $dataItem = $this->getById($updateItem);
+            $dataItem = $this->getById($id);
 
             // Simpan detail item
             if (!empty($detailItem)) {
@@ -127,14 +139,14 @@ class ItemHelper implements CrudInterface
             ];
         }
     }
-
+ 
     /**
      * Menghapus data item dengan sistem "Soft Delete"
      * yaitu mengisi kolom deleted_at agar data tsb tidak
      * keselect waktu menggunakan Query
      *
      * @param  integer $id id dari tabel m_item
-     * 
+     *
      * @return bool
      */
     public function delete(int $id): bool

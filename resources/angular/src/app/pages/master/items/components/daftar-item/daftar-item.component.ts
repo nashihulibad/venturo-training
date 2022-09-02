@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import Swal from "sweetalert2";
-
+import { environment } from "src/environments/environment";
 import { LandaService } from "src/app/core/services/landa.service";
 import { ItemService } from "../../services/item.service";
 
@@ -16,9 +16,18 @@ export class DaftarItemComponent implements OnInit {
     modelId: number;
     isOpenForm: boolean = false;
 
+    //datatable
+    dtOptions: DataTables.Settings = {};
+
+    //pagination
+    currentPage: any;
+    maxData: any;
+    maxPage: any;
+    paging = [];
+    page = [];
+
     titleModal: string;
     keywordSearch: any;
-    categorySearch: any;
 
     constructor(
         private itemService: ItemService,
@@ -27,6 +36,7 @@ export class DaftarItemComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.currentPage = 1;
         this.getItem();
     }
 
@@ -35,14 +45,40 @@ export class DaftarItemComponent implements OnInit {
     }
 
     getItem() {
-        this.itemService.getItems([]).subscribe(
+        this.itemService.getItems({ nama: "", kategori: "" }).subscribe(
             (res: any) => {
-                this.listItems = res.data.list;
+                this.maxData = res.data.meta.total;
+                this.paging = res.data.meta.links;
+                this.initPage(this.paging.length);
+                this.pagin(this.currentPage);
             },
             (err: any) => {
                 console.log(err);
             }
         );
+    }
+
+    initPage(page = 1) {
+        this.page = new Array(page);
+        for (let i = 1; i <= page; i++) {
+            this.page[i - 1] = i;
+        }
+    }
+
+    pagin(page: any) {
+        if (page >= 1 && page <= this.paging.length) {
+            this.landaService
+                .DataGet(this.paging[page - 1].replace(environment.apiURL, ""))
+                .subscribe(
+                    (res: any) => {
+                        this.listItems = res.data.list;
+                        this.currentPage = page;
+                    },
+                    (err) => {
+                        console.log(err);
+                    }
+                );
+        }
     }
 
     showModalSearchItem(modal) {
@@ -51,14 +87,21 @@ export class DaftarItemComponent implements OnInit {
     }
 
     cariItem() {
-        this.itemService.getItems({ nama: this.keywordSearch }).subscribe(
-            (res: any) => {
-                this.listItems = res.data.list;
-            },
-            (err: any) => {
-                console.log(err);
-            }
-        );
+        this.itemService
+            .getItems({
+                nama: this.keywordSearch,
+            })
+            .subscribe(
+                (res: any) => {
+                    this.listItems = res.data.list;
+                    this.maxData = res.data.meta.total;
+                    this.paging = res.data.meta.links;
+                    this.initPage(this.paging.length);
+                },
+                (err: any) => {
+                    console.log(err);
+                }
+            );
     }
 
     showForm(show) {

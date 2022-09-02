@@ -36,8 +36,6 @@ export class FormUserComponent implements OnInit {
         password: string;
     };
 
-    fotoTest =
-        "http://127.0.0.1:8000/storage/upload/fotoUser/Y36K6SThcXJibfWxvyTdVPUS3ZvLelTEWAmxfOMc.png";
 
     constructor(
         private userService: UserService,
@@ -62,7 +60,7 @@ export class FormUserComponent implements OnInit {
             id: 0,
             nama: "",
             akses: {
-                id: 0,
+                id: 1,
                 nama: "",
             },
             foto: "",

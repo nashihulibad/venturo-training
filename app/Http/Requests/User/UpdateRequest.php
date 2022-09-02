@@ -9,7 +9,7 @@ use ProtoneMedia\LaravelMixins\Request\ConvertsBase64ToFiles;
 class UpdateRequest extends FormRequest
 {
     use ConvertsBase64ToFiles; // Library untuk convert base64 menjadi File
-    
+
     public $validator = null;
 
     /**

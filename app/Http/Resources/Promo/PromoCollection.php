@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Item;
+namespace App\Http\Resources\Promo;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ItemCollection extends ResourceCollection
+class PromoCollection extends ResourceCollection
 {
-    /** 
-     * Transform the resource into an array.
+    /**
+     * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
@@ -15,7 +15,7 @@ class ItemCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'list' => $this->collection, // otomatis mengikuti format UserResource
+            'list' => $this->collection, 
             'meta' => [
                 'links' => $this->getUrlRange(1, $this->lastPage()),
                 'total' => $this->total()

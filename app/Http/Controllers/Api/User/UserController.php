@@ -54,7 +54,8 @@ class UserController extends Controller
             return response()->failed($request->validator->errors());
         }
 
-        $dataInput = $request->only(['email', 'nama', 'password', 'foto']);
+        $dataInput = $request->only(['email', 'nama', 'password', 'foto','akses']);
+        $dataInput['user_roles_id'] = $request->input('akses')['id'];
         $dataUser = $this->user->create($dataInput);
 
         if (!$dataUser['status']) {
@@ -96,6 +97,7 @@ class UserController extends Controller
         }
 
         $dataInput = $request->only(['email', 'nama', 'password', 'id', 'foto']);
+        $dataInput['user_roles_id'] = $request->input('akses')['id'];
         $dataUser = $this->user->update($dataInput, $dataInput['id']);
 
         if (!$dataUser['status']) {
