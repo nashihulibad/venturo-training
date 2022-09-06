@@ -37,6 +37,7 @@ class ItemHelper implements CrudInterface
     {
         return $this->itemModel->getAll($filter, $itemPerPage, $sort);
     }
+    
 
     /**
      * Mengambil 1 data item dari tabel m_item
@@ -139,7 +140,7 @@ class ItemHelper implements CrudInterface
             ];
         }
     }
- 
+
     /**
      * Menghapus data item dengan sistem "Soft Delete"
      * yaitu mengisi kolom deleted_at agar data tsb tidak

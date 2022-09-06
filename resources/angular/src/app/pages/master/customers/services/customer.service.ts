@@ -9,7 +9,7 @@ export class CustomerService {
     constructor(private landaService: LandaService) { }
 
     getCustomers(arrParameter) {
-        return this.landaService.DataGet('/v1/customers', { arrParameter });
+        return this.landaService.DataGet('/v1/customers',  arrParameter );
     }
 
     getCustomerById(customerId) {

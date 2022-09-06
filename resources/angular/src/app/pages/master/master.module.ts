@@ -20,6 +20,12 @@ import { FormCustomerComponent } from "./customers/components/form-customer/form
 import { FormItemComponent } from "./items/components/form-item/form-item.component";
 import { DaftarItemComponent } from "./items/components/daftar-item/daftar-item.component";
 import { ProfileComponent } from './users/components/profile/profile.component';
+import { DaftarPromoComponent } from './promos/components/daftar-promo/daftar-promo.component';
+import { FormPromoComponent } from './promos/components/form-promo/form-promo.component';
+import { DaftarBukuComponent } from './bukus/components/daftar-buku/daftar-buku.component';
+import { FormBukuComponent } from './bukus/components/form-buku/form-buku.component';
+import { DaftarPeminjamanComponent } from './peminjamans/components/daftar-peminjaman/daftar-peminjaman.component';
+import { FormPeminjamanComponent } from './peminjamans/components/form-peminjaman/form-peminjaman.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +38,12 @@ import { ProfileComponent } from './users/components/profile/profile.component';
         FormItemComponent,
         DaftarItemComponent,
         ProfileComponent,
+        DaftarPromoComponent,
+        FormPromoComponent,
+        DaftarBukuComponent,
+        FormBukuComponent,
+        DaftarPeminjamanComponent,
+        FormPeminjamanComponent,
     ],
     imports: [
         CommonModule,

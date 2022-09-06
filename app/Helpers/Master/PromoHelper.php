@@ -27,6 +27,13 @@ class PromoHelper implements CrudInterface{
     public function create(array $payload): array
     {
         try {
+
+            if(!empty($payload['foto'])){
+                $foto = $payload['foto']->store('public/upload/fotoPromo');
+                $foto = str_replace('public/','', $foto);
+                $payload['foto'] = "http://127.0.0.1:8000/storage/".$foto;
+            }
+
             $promo = $this->promoModel->store($payload);
 
             return [
@@ -45,6 +52,13 @@ class PromoHelper implements CrudInterface{
     public function update(array $payload, int $id): array
     {
         try {
+            
+            if(!empty($payload['foto'])){
+                $foto = $payload['foto']->store('public/upload/fotoPromo');
+                $foto = str_replace('public/','', $foto);
+                $payload['foto'] = "http://127.0.0.1:8000/storage/".$foto;
+            }
+
             $this->promoModel->edit($payload, $id);
 
             return [

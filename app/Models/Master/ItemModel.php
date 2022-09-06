@@ -53,6 +53,9 @@ class ItemModel extends Model implements ModelInterface
      *
      * @return void
      */
+
+
+
     public function itemDet()
     {
         return $this->hasMany(ItemDetModel::class, 'm_item_id', 'id');
@@ -60,7 +63,7 @@ class ItemModel extends Model implements ModelInterface
 
     public function getAll(array $filter, int $itemPerPage = 0, string $sort = ''): object
     {
-        $dataItem = $this->query();
+        $dataItem = $this->query()->with('itemDet');
 
         if (!empty($filter['nama'])) {
             $dataItem->where('nama', 'LIKE', '%'.$filter['nama'].'%');

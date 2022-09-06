@@ -45,11 +45,16 @@ class PromoModel extends Model implements ModelInterface
             $dataPromo->where('nama', 'LIKE', '%'.$filter['nama'].'%');
         }
 
+        if(!empty($filter['type'])){
+            $dataPromo->where('type', '=', $filter['type']);
+        }
+
         $sort = $sort ?: 'id_promo DESC';
         $dataPromo->orderByRaw($sort);
         $itemPerPage = $itemPerPage > 0 ? $itemPerPage : false;
 
-        return $dataPromo->paginate($itemPerPage)->appends('sort', $sort)->appends('nama', $filter['nama']);
+        return $dataPromo->paginate($itemPerPage)->appends('sort', $sort)
+        ->appends('nama', $filter['nama'])->appends('type', $filter['type']);
     }
 
     public function fotoUrl() {

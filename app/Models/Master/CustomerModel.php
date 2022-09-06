@@ -57,15 +57,11 @@ class CustomerModel extends Model implements ModelInterface
             $customer->where('nama', 'LIKE', '%'.$filter['nama'].'%');
         }
 
-        if (!empty($filter['email'])) {
-            $customer->where('email', 'LIKE', '%'.$filter['email'].'%');
-        }
-
         $sort = $sort ?: 'id DESC';
         $customer->orderByRaw($sort);
         $itemPerPage = $itemPerPage > 0 ? $itemPerPage : false;
-        
-        return $customer->paginate($itemPerPage)->appends('sort', $sort);
+
+        return $customer->paginate($itemPerPage)->appends('sort', $sort)->appends('nama', $filter['nama']);
     }
 
     public function getById(int $id): object

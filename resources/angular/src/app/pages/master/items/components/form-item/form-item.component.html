@@ -92,7 +92,7 @@
                                 class="file"
                                 type="file"
                                 id="gambar"
-                                [(ngModel)]="formModel.foto"
+                                name="foto"
                                 (change)="onFileSelected($event)"
                             />
                         </div>
@@ -119,41 +119,6 @@
                 />
             </div>
 
-            <!-- <div class="form-group row">
-                <label for="foto" class="col-md-4">Foto Menu</label>
-                <div class="col-md-8">
-                    <div class="col-4" style="border-bottom-color: #2e2e2e">
-                        <div class="container">
-                            <div class="mt-4">
-                                <h6 class="heading-styling">
-                                    <img
-                                        *ngIf="formModel.foto.base64"
-                                        [src]="formModel.foto.base64"
-                                        data-holder-rendered="true"
-                                        class="text-center"
-                                        width="227px"
-                                        height="100%"
-                                    />
-                                    <img
-                                        *ngIf="!formModel.foto.base64"
-                                        src="{{ formModel.foto }}"
-                                        data-holder-rendered="true"
-                                        class="text-center"
-                                        width="227px"
-                                        height="100%"
-                                    />
-                                    <input
-                                        type="file"
-                                        id="foto"
-                                        name="formModel.foto"
-                                        (change)="onFileSelected($event)"
-                                    />
-                                </h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
         <div class="col-md-6">
             <div class="form-group row">

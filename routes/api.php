@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Master\CustomerController;
 use App\Http\Controllers\Api\Master\ItemController;
 use App\Http\Controllers\Api\Master\PromoController;
+use App\Http\Controllers\Api\Master\BukuController;
+use App\Http\Controllers\Api\Master\PeminjamanContoller;
+use App\Http\Controllers\Api\Master\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +27,7 @@ Route::prefix('v1')->group(function () {
      * CRUD user
      */
     Route::get('/users', [UserController::class, 'index'])->middleware(['web', 'auth.api:user_view']);
+    Route::get('/users/all', [UserController::class, 'getAllUser'])->middleware(['web', 'auth.api:user_view']);
     Route::get('/users/{id}', [UserController::class, 'show'])->middleware(['web', 'auth.api:user_view']);
     Route::post('/users', [UserController::class, 'store'])->middleware(['web', 'auth.api:user_create']);
     Route::put('/users', [UserController::class, 'update'])->middleware(['web', 'auth.api:user_update']);
@@ -64,6 +68,29 @@ Route::prefix('v1')->group(function () {
     Route::post('/promos', [PromoController::class, 'store'])->middleware(['web', 'auth.api:promo_create']);
     Route::put('/promos', [PromoController::class, 'update'])->middleware(['web', 'auth.api:promo_update']);
     Route::delete('/promos/{id}', [PromoController::class, 'destroy'])->middleware(['web', 'auth.api:promo_delete']);
+
+
+     /**
+     * CRUD bukus
+     */
+    Route::get('/bukus', [BukuController::class, 'index'])->middleware(['web', 'auth.api:buku_view']);
+    Route::get('/bukus/all', [BukuController::class, 'getAllBuku'])->middleware(['web', 'auth.api:buku_view']);
+    Route::get('/bukus/{id}', [BukuController::class, 'show'])->middleware(['web', 'auth.api:buku_view']);
+    Route::post('/bukus', [BukuController::class, 'store'])->middleware(['web', 'auth.api:buku_create']);
+    Route::put('/bukus', [BukuController::class, 'update'])->middleware(['web', 'auth.api:buku_update']);
+    Route::delete('/bukus/{id}', [BukuController::class, 'destroy'])->middleware(['web', 'auth.api:buku_delete']);
+
+    /**
+     * CRUD peminjamans
+     */
+    Route::get('/peminjamans', [PeminjamanContoller::class, 'index'])->middleware(['web', 'auth.api:peminjaman_view']);
+    Route::get('/peminjamans/users', [PeminjamanContoller::class, 'getByUser'])->middleware(['web', 'auth.api:peminjaman_user']);
+    Route::get('/peminjamans/{id}', [PeminjamanContoller::class, 'show'])->middleware(['web', 'auth.api:peminjaman_view']);
+    Route::post('/peminjamans', [PeminjamanContoller::class, 'store'])->middleware(['web', 'auth.api:peminjaman_create']);
+    Route::put('/peminjamans', [PeminjamanContoller::class, 'update'])->middleware(['web', 'auth.api:peminjaman_update']);
+    Route::delete('/peminjamans/{id}', [PeminjamanContoller::class, 'destroy'])->middleware(['web', 'auth.api:peminjaman_delete']);
+    Route::post('/peminjamans/kembali', [PeminjamanContoller::class, 'kembalikan'])->middleware(['web', 'auth.api:peminjaman_update']);
+     Route::post('/peminjamans/denda', [PeminjamanContoller::class, 'cekDenda'])->middleware(['web', 'auth.api:peminjaman_update']);
 
     /**
      * Route khusus authentifikasi

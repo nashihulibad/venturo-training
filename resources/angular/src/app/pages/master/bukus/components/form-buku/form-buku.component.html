@@ -1,0 +1,60 @@
+<form>
+    <div class="form-group row">
+        <label class="col-md-4 required">Judul</label>
+        <div class="col-md-8">
+            <input
+                [(ngModel)]="formModel.judul"
+                type="text"
+                name="judul"
+                class="form-control"
+                placeholder="Judul Buku"
+            />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 required">Author</label>
+        <div class="col-md-8">
+            <input
+                [(ngModel)]="formModel.author"
+                type="text"
+                name="author"
+                class="form-control"
+                placeholder="Author Buku"
+            />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 required">Stok</label>
+        <div class="col-md-8">
+            <input
+                [(ngModel)]="formModel.stok"
+                type="number"
+                name="stok"
+                class="form-control"
+                placeholder="Stok Buku"
+            />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4 required">Denda(dalam rupiah)</label>
+        <div class="col-md-8">
+            <input
+                [(ngModel)]="formModel.denda"
+                type="number"
+                name="denda"
+                class="form-control"
+                placeholder="Denda setiap telat pengembalian"
+            />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4"></label>
+        <div class="col-md-8">
+            <button type="submit" class="btn btn-primary" (click)="save()">
+                Simpan
+            </button>
+        </div>
+    </div>
+</form>

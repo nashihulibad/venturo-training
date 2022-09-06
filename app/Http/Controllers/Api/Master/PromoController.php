@@ -22,7 +22,8 @@ class PromoController extends Controller
 
     public function index(Request $request)
     {
-        $filter = ['nama' => $request->nama ?? ''];
+        $filter = ['nama' => $request->nama ?? '', 'type' => $request->type ?? ''];
+
         $promos = $this->promo->getAll($filter, 5, $request->sort ?? '');
 
         return response()->success(new PromoCollection($promos));

@@ -30,6 +30,10 @@ class ItemController extends Controller
         $filter = ['nama' => $request->nama ?? '', 'kategori' => $request->kategori ?? ''];
         $items = $this->item->getAll($filter, 5, $request->sort ?? '');
 
+        // $now = strtotime('now');
+        // $date = date('Y-m-d H:i:s', $now);
+        // return response()->success($date);
+
         return response()->success(new ItemCollection($items));
     }
 
@@ -56,7 +60,7 @@ class ItemController extends Controller
             return response()->failed($dataItem['error'], 422);
         }
 
-        return response()->success([], 'Data item berhasil disimpan'); 
+        return response()->success([], 'Data item berhasil disimpan');
     }
 
     /**

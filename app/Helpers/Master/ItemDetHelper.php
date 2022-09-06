@@ -160,7 +160,7 @@ class ItemDetHelper implements DetailInterface
      * $newDetail[x]['harga']
      *
      * @return boolean
-     */
+     */ 
     public function update(array $newDetail): bool
     {
         try {

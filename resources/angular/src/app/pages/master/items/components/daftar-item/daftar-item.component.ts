@@ -120,7 +120,7 @@ export class DaftarItemComponent implements OnInit {
         this.showForm(true);
     }
 
-    deleteItem(userId) {
+    deleteItem(itemId) {
         Swal.fire({
             title: "Apakah kamu yakin ?",
             text: "Item tidak dapat melakukan pesanan setelah kamu menghapus datanya",
@@ -131,7 +131,7 @@ export class DaftarItemComponent implements OnInit {
             confirmButtonText: "Ya, Hapus data ini !",
         }).then((result) => {
             if (result.value) {
-                this.itemService.deleteItem(userId).subscribe(
+                this.itemService.deleteItem(itemId).subscribe(
                     (res: any) => {
                         this.landaService.alertSuccess("Berhasil", res.message);
                         this.getItem();

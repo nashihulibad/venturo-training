@@ -18,11 +18,12 @@
                     </a>
                     <div class="dropdown-menu row" aria-labelledby="topnav-dashboard" ngbDropdownMenu>
                         <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/users']">User</a>
-                        <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/customers']">Customer</a>
+                        <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/bukus']">Buku</a>
+                        <!-- <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/customers']">Customer</a>
                         <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/items']">Menu</a>
-                        <a class="col dropdown-item side-nav-link-ref">Promo</a>
+                        <a class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/promos']" >Promo</a>
                         <a class="col dropdown-item side-nav-link-ref">Diskon</a>
-                        <a class="col dropdown-item side-nav-link-ref">Voucher</a>
+                        <a class="col dropdown-item side-nav-link-ref">Voucher</a> -->
                     </div>
                 </li>
                 <li class="nav-item dropdown" ngbDropdown>
@@ -32,9 +33,11 @@
                         <div class="arrow-down"></div>
                     </a>
                     <div class="dropdown-menu row" aria-labelledby="topnav-dashboard" ngbDropdownMenu>
-                        <a class="col dropdown-item side-nav-link-ref">Penjualan Menu</a>
+                        <!-- <a class="col dropdown-item side-nav-link-ref">Penjualan Menu</a>
                         <a class="col dropdown-item side-nav-link-ref">Penjualan Customer</a>
-                        <a class="col dropdown-item side-nav-link-ref">Rekap Penjualan</a>
+                        <a class="col dropdown-item side-nav-link-ref">Rekap Penjualan</a> -->
+
+                        <a class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/peminjamans']">Peminjaman</a>
                     </div>
                 </li>
             </ul>

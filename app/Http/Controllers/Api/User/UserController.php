@@ -31,10 +31,18 @@ class UserController extends Controller
     {
         $filter = [
             'nama' => $request->nama ?? '',
-            'email' => $request->email ?? '',
         ];
         $users = $this->user->getAll($filter, 5, $request->sort ?? '');
 
+        return response()->success(new UserCollection($users));
+    }
+
+    public function getAllUser(Request $request)
+    {
+        $filter = [
+            'nama' => $request->nama ?? '',
+        ];
+        $users = $this->user->getAll($filter, 0, $request->sort ?? '');
         return response()->success(new UserCollection($users));
     }
 

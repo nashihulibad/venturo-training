@@ -12,7 +12,7 @@ use App\Http\Resources\Customer\CustomerCollection;
 class CustomerController extends Controller
 {
     private $customer;
-    
+
     public function __construct()
     {
         $this->customer = new CustomerHelper();
@@ -45,10 +45,10 @@ class CustomerController extends Controller
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->failed($request->validator->errors(), 422);
         }
-        
+
         $dataInput = $request->only(['nama', 'email', 'is_verified']);
         $dataCust = $this->customer->create($dataInput);
-        
+
         if (!$dataCust['status']) {
             return response()->failed($dataCust['error'], 422);
         }
@@ -91,7 +91,7 @@ class CustomerController extends Controller
 
         $dataInput = $request->only(['nama', 'email', 'is_verified', 'id']);
         $dataCust = $this->customer->update($dataInput, $dataInput['id']);
-        
+
         if (!$dataCust['status']) {
             return response()->failed($dataCust['error']);
         }

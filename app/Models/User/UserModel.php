@@ -49,7 +49,7 @@ class UserModel extends Authenticatable implements JWTSubject, ModelInterface
      */
     protected $attributes = [
         'user_roles_id' => 1,
-    ];
+];
 
     protected $fillable = [
         'nama',
@@ -138,10 +138,6 @@ class UserModel extends Authenticatable implements JWTSubject, ModelInterface
 
         if (!empty($filter['nama'])) {
             $user->where('nama', 'LIKE', '%'.$filter['nama'].'%');
-        }
-
-        if (!empty($filter['email'])) {
-            $user->where('email', 'LIKE', '%'.$filter['email'].'%');
         }
 
         $sort = $sort ?: 'id DESC';

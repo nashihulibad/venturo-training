@@ -1,0 +1,176 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>Daftar Buku</h1>
+                    <div
+                        role="group"
+                        class="btn-group btn-group-sm btn-group-justified blocks"
+                    >
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary mr-2"
+                            (click)="showModalSearchBuku(searchBuku)"
+                        >
+                            <i
+                                class="fa fa-search font-size-14 align-middle mr-1"
+                            ></i>
+                            Pencarian
+                        </button>
+                        <button
+                            *ngIf="isAdmin"
+                            type="button"
+                            class="btn btn-sm btn-primary mr-2"
+                            (click)="createBuku(formBuku)"
+                        >
+                            <i
+                                class="fa fa-plus font-size-14 align-middle mr-1"
+                            ></i>
+                            Tambah Buku
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <td>Judul</td>
+                                <td>Stok</td>
+                                <td>Author</td>
+                                <td>Denda</td>
+                                <td *ngIf="isAdmin"  width="90"></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="
+                                    let val of listBuku;
+                                    index as i;
+                                    trackBy: trackByIndex
+                                "
+                            >
+                                <td class="vertical-middle">{{ val.judul }}</td>
+                                <td class="vertical-middle">{{ val.stok }}</td>
+                                <td class="vertical-middle">
+                                    {{ val.author }}
+                                </td>
+                                <td class="vertical-middle">
+                                    {{ val.denda }}
+                                </td>
+                                <td *ngIf="isAdmin"  class="vertical-middle text-right">
+                                    <a
+                                        href="javascript: void(0);"
+                                        class="align-middle mr-2"
+                                        (click)="updateBuku(formBuku, val)"
+                                        placement="left"
+                                        container="body"
+                                        ngbTooltip="Ubah"
+                                    >
+                                        <i class="fa fa-edit font-size-14"></i>
+                                    </a>
+                                    <a
+                                        href="javascript: void(0);"
+                                        class="align-middle"
+                                        (click)="deleteBuku(val.id)"
+                                        placement="left"
+                                        container="body"
+                                        ngbTooltip="Hapus"
+                                    >
+                                        <i class="fa fa-trash font-size-14"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    (click)="pagin(currentPage - 1)"
+                                    >Previous</a
+                                >
+                            </li>
+                            <li
+                                *ngFor="let p of page"
+                                class="page-item"
+                                [class.active]="p == currentPage"
+                            >
+                                <a class="page-link" (click)="pagin(p)">{{
+                                    p
+                                }}</a>
+                            </li>
+                            <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    (click)="pagin(currentPage + 1)"
+                                    >Next</a
+                                >
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #formBuku let-modal>
+    <div *ngIf="isAdmin" class="modal-header">
+        <h5 class="modal-title mt-0">{{ titleModal }}</h5>
+        <button
+            type="button"
+            class="close"
+            (click)="modal.close()"
+            aria-label="Close"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-form-buku
+            [bukuId]="modelId"
+            (afterSave)="modal.close(); getBuku()"
+        ></app-form-buku>
+    </div>
+</ng-template>
+
+<ng-template #searchBuku let-modal>
+    <div *ngIf="isAdmin" class="modal-header">
+        <h5 class="modal-title mt-0">{{ titleModal }}</h5>
+        <button
+            type="button"
+            class="close"
+            (click)="modal.close()"
+            aria-label="Close"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <input
+                        [(ngModel)]="judulSearch"
+                        type="text"
+                        name="judulSearch"
+                        class="form-control"
+                        placeholder="Pencarian berdasarkan judul"
+                    />
+                </div>
+            </div>
+            <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="getBuku()"
+                (click)="modal.close()"
+            >
+                Search
+            </button>
+        </form>
+    </div>
+</ng-template>

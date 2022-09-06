@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ItemResource extends JsonResource
 {
-    /** 
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -22,7 +22,8 @@ class ItemResource extends JsonResource
             'deskripsi' => $this->deskripsi,
             'kategori' => $this->kategori,
             'harga' => $this->harga,
-            'is_available' => $this->is_available
+            'is_available' => $this->is_available,
+            'detail' => $this->itemDet,
         ];
     }
 }

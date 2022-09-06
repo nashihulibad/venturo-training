@@ -28,7 +28,7 @@ class CreateUserAuth extends Migration
             $table->integer('updated_by')->default(0);
             $table->integer('deleted_by')->default(0);
 
-            $table->index('user_roles_id'); // Menambah index pada kolom m_roles_id
+            $table->index('user_roles_id');
             $table->index('email');
             $table->index('nama');
             $table->index('updated_security');

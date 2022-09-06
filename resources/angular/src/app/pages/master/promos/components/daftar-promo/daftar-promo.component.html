@@ -1,0 +1,231 @@
+<div class="container-fluid" *ngIf="!isOpenForm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>Daftar Promo</h1>
+                    <div
+                        role="group"
+                        class="btn-group btn-group-sm btn-group-justified blocks"
+                    >
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary mr-2"
+                            (click)="showModalSearchPromo(searchPromo)"
+                        >
+                            <i
+                                class="fa fa-search font-size-14 align-middle mr-1"
+                            ></i>
+                            Pencarian
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-primary mr-2"
+                            (click)="createPromo()"
+                        >
+                            <i
+                                class="fa fa-plus font-size-14 align-middle mr-1"
+                            ></i>
+                            Tambah Promo
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <td>Gambar</td>
+                                <td>Nama</td>
+                                <td>Type</td>
+                                <td>Nominal</td>
+                                <td>Diskon</td>
+                                <td>Kadaluarsa</td>
+                                <td width="90">Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="
+                                    let val of listPromos;
+                                    index as i;
+                                    trackBy: trackByIndex
+                                "
+                            >
+                                <td>
+                                    <img
+                                        src="{{ val.fotoUrl }}"
+                                        class="rounded-circle img-thumb"
+                                    />
+                                </td>
+                                <td class="vertical-middle">{{ val.nama }}</td>
+                                <td class="vertical-middle">
+                                    {{ val.type }}
+                                </td>
+                                <td class="vertical-middle">
+                                    {{ val.nominal }}
+                                </td>
+                                <td class="vertical-middle">
+                                    {{ val.diskon }}%
+                                </td>
+                                <td class="vertical-middle">
+                                    {{ val.kadaluarsa }} Hari
+                                </td>
+                                <td class="vertical-middle text-right">
+                                    <a
+                                        href="javascript: void(0);"
+                                        class="align-middle mr-2"
+                                        (click)="updatePromo(val)"
+                                        placement="left"
+                                        container="body"
+                                        ngbTooltip="Ubah"
+                                    >
+                                        <i class="fa fa-edit font-size-14"></i>
+                                    </a>
+                                    <a
+                                        href="javascript: void(0);"
+                                        class="align-middle"
+                                        (click)="deletePromo(val.id)"
+                                        placement="left"
+                                        container="body"
+                                        ngbTooltip="Hapus"
+                                    >
+                                        <i class="fa fa-trash font-size-14"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    (click)="pagin(currentPage - 1)"
+                                    >Previous</a
+                                >
+                            </li>
+                            <li
+                                *ngFor="let p of page"
+                                class="page-item"
+                                [class.active]="p == currentPage"
+                            >
+                                <a class="page-link" (click)="pagin(p)">{{
+                                    p
+                                }}</a>
+                            </li>
+                            <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    (click)="pagin(currentPage + 1)"
+                                    >Next</a
+                                >
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="isOpenForm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>
+                        {{ titleCard }}
+                    </h1>
+                </div>
+                <div class="card-body">
+                    <app-form-promo
+                        [promoId]="modelId"
+                        (afterSave)="showForm(false); getPromo()"
+                    >
+                    </app-form-promo>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #searchPromo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">{{ titleModal }}</h5>
+        <button
+            type="button"
+            class="close"
+            (click)="modal.close()"
+            aria-label="Close"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <input
+                        [(ngModel)]="keywordSearch"
+                        type="text"
+                        name="nama"
+                        class="form-control"
+                        placeholder="Pencarian berdasarkan nama"
+                    />
+                </div>
+            </div>
+
+              <div class="form-group row">
+
+                <div class="col-md-10">
+                    <div
+                        class="btn-group"
+                        role="group"
+                        ngbRadioGroup
+                        name="type"
+                        [(ngModel)]="typeSearch"
+                    >
+                        <label ngbButtonLabel class="btn-info">
+                            <input
+                                ngbButton
+                                type="radio"
+                                class="btn-check"
+                                value="diskon"
+                            />
+                            Diskon
+                        </label>
+                        <label ngbButtonLabel class="btn-info">
+                            <input
+                                ngbButton
+                                type="radio"
+                                class="btn-check"
+                                value="voucher"
+                            />
+                            Voucher
+                        </label>
+                         <label ngbButtonLabel class="btn-info">
+                            <input
+                                ngbButton
+                                type="radio"
+                                class="btn-check"
+                                value=""
+                            />
+                            All
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="getPromo()"
+                (click)="modal.close()"
+            >
+                Search
+            </button>
+        </form>
+    </div>
+</ng-template>

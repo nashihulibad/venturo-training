@@ -1,0 +1,272 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>Daftar Peminjaman</h1>
+                    <div
+                        role="group"
+                        class="btn-group btn-group-sm btn-group-justified blocks"
+                    >
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary mr-2"
+                            (click)="
+                                showModalSearchPeminjaman(searchPeminjaman)
+                            "
+                        >
+                            <i
+                                class="fa fa-search font-size-14 align-middle mr-1"
+                            ></i>
+                            Pencarian
+                        </button>
+                        <button
+                            *ngIf="isAdmin"
+                            type="button"
+                            class="btn btn-sm btn-primary mr-2"
+                            (click)="createPeminjaman(formPeminjaman)"
+                        >
+                            <i
+                                class="fa fa-plus font-size-14 align-middle mr-1"
+                            ></i>
+                            Tambah Peminjaman
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <td>Nama peminjam</td>
+                                <td>Judul Buku Buku</td>
+                                <td>Banyak</td>
+                                <td>Tanggal Peminjaman</td>
+                                <td>Batas Pengembalian</td>
+                                <td>Status Dikembalikan</td>
+                                <td>Tanggal Dikembalikan</td>
+
+                                <td *ngIf="isAdmin">Kembalikan Buku</td>
+                                <td *ngIf="isAdmin" width="90"></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="
+                                    let val of listPeminjaman;
+                                    index as i;
+                                    trackBy: trackByIndex
+                                "
+                            >
+                                <td class="vertical-middle">{{ val.nama }}</td>
+                                <td class="vertical-middle">{{ val.judul }}</td>
+                                <td class="vertical-middle">{{ val.unit }}</td>
+                                <td class="vertical-middle">
+                                    {{ val.tanggal_peminjaman }}
+                                </td>
+                                <td class="vertical-middle">
+                                    {{ val.batas_pengembalian }}
+                                </td>
+                                <td *ngIf="val.is_kembali==0" class="vertical-middle">
+                                    <span class="badge badge-warning">Belum</span>
+                                </td>
+                                <td *ngIf="val.is_kembali==1"  class="vertical-middle">
+
+                                     <span class="badge badge-success">Sudah</span>
+                                </td>
+                                <td class="vertical-middle">
+                                    {{ val.tanggal_pengembalian }}
+                                </td>
+                                <td *ngIf="isAdmin">
+                                    <a
+                                        href="javascript: void(0);"
+                                        class="btn-sm btn-primary"
+                                        (click)="
+                                            showModalKembalikan(
+                                                formKembalikan,
+                                                val
+                                            )
+                                        "
+                                        placement="left"
+                                        container="body"
+                                    >
+                                        Kembalikan Buku
+                                    </a>
+                                </td>
+                                <td
+                                    *ngIf="isAdmin"
+                                    class="vertical-middle text-right"
+                                >
+                                    <a
+                                        href="javascript: void(0);"
+                                        class="align-middle mr-2"
+                                        (click)="
+                                            updatePeminjaman(
+                                                formPeminjaman,
+                                                val
+                                            )
+                                        "
+                                        placement="left"
+                                        container="body"
+                                        ngbTooltip="Ubah"
+                                    >
+                                        <i class="fa fa-edit font-size-14"></i>
+                                    </a>
+                                    <a
+                                        href="javascript: void(0);"
+                                        class="align-middle"
+                                        (click)="deletePeminjaman(val.id)"
+                                        placement="left"
+                                        container="body"
+                                        ngbTooltip="Hapus"
+                                    >
+                                        <i class="fa fa-trash font-size-14"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    (click)="pagin(currentPage - 1)"
+                                    >Previous</a
+                                >
+                            </li>
+                            <li
+                                *ngFor="let p of page"
+                                class="page-item"
+                                [class.active]="p == currentPage"
+                            >
+                                <a class="page-link" (click)="pagin(p)">{{
+                                    p
+                                }}</a>
+                            </li>
+                            <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    (click)="pagin(currentPage + 1)"
+                                    >Next</a
+                                >
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #formPeminjaman let-modal>
+    <div *ngIf="isAdmin" class="modal-header">
+        <h5 class="modal-title mt-0">{{ titleModal }}</h5>
+        <button
+            type="button"
+            class="close"
+            (click)="modal.close()"
+            aria-label="Close"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+          <app-form-peminjaman
+            [peminjamanId]="modelId"
+            (afterSave)="modal.close(); getPeminjaman()"
+        ></app-form-peminjaman>
+    </div>
+</ng-template>
+
+<ng-template #formKembalikan let-modal>
+    <div *ngIf="isAdmin" class="modal-header">
+        <h5 class="modal-title mt-0">{{ titleModal }}</h5>
+        <button
+            type="button"
+            class="close"
+            (click)="modal.close()"
+            aria-label="Close"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group row">
+             <label class="col-md-4 required">Tanggal Pengembalian</label>
+            <div class="col-md-8">
+                <input
+                    [(ngModel)]="tanggalPengembalian"
+                    type="date"
+                    id="tanggalPengembalian"
+                    name="tanggalPengembalian"
+                />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <h4>{{ denda }}</h4>
+            </div>
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+            (click)="getDendaPeminjaman()"
+            (click)="modal.close()"
+        >
+            Lihat Denda
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #searchPeminjaman let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">{{ titleModal }}</h5>
+        <button
+            type="button"
+            class="close"
+            (click)="modal.close()"
+            aria-label="Close"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group row">
+
+                <div class="col-md-12">
+                    <input
+                        [(ngModel)]="judulSearch"
+                        type="text"
+                        name="judulSearch"
+                        class="form-control"
+                        placeholder="Pencarian berdasarkan judul"
+                    />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <input
+                        [(ngModel)]="namaSearch"
+                        type="text"
+                        name="namaSearch"
+                        class="form-control"
+                        placeholder="Pencarian berdasarkan nama"
+                    />
+                </div>
+            </div>
+            <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="getPeminjaman()"
+                (click)="modal.close()"
+            >
+                Search
+            </button>
+        </form>
+    </div>
+</ng-template>
